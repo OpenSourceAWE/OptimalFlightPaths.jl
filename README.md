@@ -1,3 +1,30 @@
 # OptimalFlightPaths
 
 [![Build Status](https://github.com/OpenSourceAWE/OptimalFlightPaths.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/OpenSourceAWE/OptimalFlightPaths.jl/actions/workflows/CI.yml?query=branch%3Amain)
+
+## Installation
+
+First, install Julia 1.10 or newer as explained [here](https://ufechner7.github.io/2024/08/09/installing-julia-with-juliaup.html).
+
+Checkout this repo:
+
+```
+git clone https://github.com/OpenSourceAWE/OptimalFlightPaths.jl.git
+```
+Start Julia with
+```
+cd OptimalFlightPaths.jl
+julia --project
+```
+
+Install the dependencies with:
+```
+using Pkg
+Pkg.instantiate()
+```
+
+Run the example with:
+```
+include("examples/create_flightpath.jl")
+```
+You should see a tilted figure of eight.
