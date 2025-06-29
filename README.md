@@ -36,6 +36,6 @@ include("examples/sliders.jl")
 ![Screenshot](./docs/screenshot.png)
 
 ## Next Steps
-- implement a path following controller (not in this package, but in SimpleKiteControllers.jl)
+- implement a path following controller (not in this package, but in [SimpleKiteControllers.jl](https://github.com/OpenSourceAWE/SimpleKiteControllers.jl))
 - implement a function that runs the controller for at least one figure of eight (and some initialization to reach a stable, repetitive trajectory) and that returns the average traction force in x direction and the average steering power
 - add an optimizer using Nomad.jl that optimizes the 7 parameters
