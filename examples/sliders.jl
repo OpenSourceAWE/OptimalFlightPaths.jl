@@ -4,10 +4,10 @@ function figure_eight_path(A, B, C, D, x0, y0, theta, num_points)
     t = range(0, 2π, length=num_points)
     x = A * sin.(t)
     y = B * sin.(t) .* cos.(t) .+ C .* cos.(t) .+ D .* cos.(2t)
+    y = y / (maximum(y)/(B/2))
     # Apply rotation
     x_rot = x .* cos(theta) .- y .* sin(theta) 
     y_rot = x .* sin(theta) .+ y .* cos(theta)
-    y_rot = y_rot / (maximum(y_rot)/(B/2))
     # Apply translation
     x_final = x_rot .+ x0
     y_final = y_rot .+ y0
@@ -20,21 +20,21 @@ C = Observable(0.0)       # size of right part of the figure-eight
 D = Observable(0.0)       # asymmetry factor
 x0 = Observable(0.0)      # center x-coordinate
 y0 = Observable(25.0)     # center y-coordinate
-theta = 0*π/6   # rotation angle in radians
+theta = Observable(0.0)     # rotation angle in degrees
 num_points = 200
 
-function figure_eight_y(A, B, C, D, x0, y0)
-    x, y = figure_eight_path(A, B, C, D, x0, y0, theta, num_points)
+function figure_eight_y(A, B, C, D, x0, y0, theta)
+    x, y = figure_eight_path(A, B, C, D, x0, y0, deg2rad(theta), num_points)
     return y
 end
 
-function figure_eight_x(A, B, C, D, x0, y0)
-    x, y = figure_eight_path(A, B, C, D, x0, y0, theta, num_points)
+function figure_eight_x(A, B, C, D, x0, y0, theta)
+    x, y = figure_eight_path(A, B, C, D, x0, y0, deg2rad(theta), num_points)
     return x
 end
 
-y = @lift(figure_eight_y($A, $B, $C, $D, $x0, $y0))
-x = @lift(figure_eight_x($A, $B, $C, $D, $x0, $y0))
+y = @lift(figure_eight_y($A, $B, $C, $D, $x0, $y0, $theta))
+x = @lift(figure_eight_x($A, $B, $C, $D, $x0, $y0, $theta))
 
 # Create the figure and axis
 fig = Figure()
@@ -54,7 +54,8 @@ sg = SliderGrid(
     (label = "C (right_size)", range = -2.0:0.01:2.0, startvalue = 0.0),
     (label = "D (asymmetry)", range = -3:0.01:3.0, startvalue = 0.0),
     (label = "x0", range = -10:0.01:10.0, startvalue = 0.0),
-    (label = "y0", range = 20:0.01:30.0, startvalue = 25.0)
+    (label = "y0", range = 20:0.01:30.0, startvalue = 25.0),
+    (label = "theta [°]", range = -90:0.01:90, startvalue = 0.0)
 )
 
 # Connect sliders to observables
@@ -81,6 +82,11 @@ end
 on(sg.sliders[6].value) do val
     y0[] = val
 end
+
+on(sg.sliders[7].value) do val
+    theta[] = val
+end
+
 
 
 fig

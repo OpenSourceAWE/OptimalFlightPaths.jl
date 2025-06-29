@@ -29,9 +29,10 @@ include("examples/create_flightpath.jl")
 ```
 You should see a tilted figure of eight.
 
-The second example uses sliders to modify the parameters B, C and D.
+The second example uses sliders to modify 7 parameters:
 ```julia
 include("examples/sliders.jl")
 ```
+![Screenshot](./docs/screenshot.png)
 
 
