@@ -46,8 +46,8 @@ lineplot = lines!(ax, x, y)
 # Create sliders for amplitude and frequency
 sg = SliderGrid(
     fig[2, 1],
-    (label = "C", range = -1.0:0.01:1.0, startvalue = 0.0),
-    (label = "D", range = -1:0.01:1.0, startvalue = 0.0)
+    (label = "C", range = -2.0:0.01:2.0, startvalue = 0.0),
+    (label = "D", range = -2:0.01:2.0, startvalue = 0.0)
 )
 
 # Connect sliders to observables
