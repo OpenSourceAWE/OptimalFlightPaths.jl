@@ -23,8 +23,15 @@ using Pkg
 Pkg.instantiate()
 ```
 
-Run the example with:
+Run the first example with:
 ```julia
 include("examples/create_flightpath.jl")
 ```
 You should see a tilted figure of eight.
+
+The second example uses sliders to modify the parameters B, C and D.
+```julia
+include("examples/sliders.jl")
+```
+
+
