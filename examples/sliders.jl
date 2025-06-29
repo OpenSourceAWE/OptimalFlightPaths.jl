@@ -14,21 +14,27 @@ function figure_eight_path(A, B, C, D, x0, y0, theta, num_points)
     return x_final, y_final
 end
 
-# Example usage:
 A = 10.0      # width of the figure-eight
 B = 5.0       # height of the figure-eight
-C = Observable(1.0)       # size of right part of the figure-eight
-D = Observable(1.0)      # asymmetry factor
+C = Observable(0.0)       # size of right part of the figure-eight
+D = Observable(0.0)      # asymmetry factor
 x0 = 0.0      # center x-coordinate
 y0 = 0.0      # center y-coordinate
 theta = 0*π/6   # rotation angle in radians
 num_points = 200
 
-# Define the x range
-x = LinRange(0, 6π, 500)
+function figure_eight_y(C, D)
+    x, y = figure_eight_path(A, B, C, D, x0, y0, theta, num_points)
+    return y
+end
 
-# Observable for the y values
-y = @lift($C .* sin.($D .* x))
+function figure_eight_x(C, D)
+    x, y = figure_eight_path(A, B, C, D, x0, y0, theta, num_points)
+    return x
+end
+
+y = @lift(figure_eight_y($C, $D))
+x = @lift(figure_eight_x($C, $D))
 
 # Create the figure and axis
 fig = Figure()
@@ -40,8 +46,8 @@ lineplot = lines!(ax, x, y)
 # Create sliders for amplitude and frequency
 sg = SliderGrid(
     fig[2, 1],
-    (label = "C", range = 0.0:0.01:2.0, startvalue = 1.0),
-    (label = "D", range = 0.5:0.01:3.0, startvalue = 1.0)
+    (label = "C", range = -1.0:0.01:1.0, startvalue = 0.0),
+    (label = "D", range = -1:0.01:1.0, startvalue = 0.0)
 )
 
 # Connect sliders to observables
