@@ -18,23 +18,23 @@ A = Observable(20.0)      # width of the figure-eight
 B = Observable(10.0)      # height of the figure-eight
 C = Observable(0.0)       # size of right part of the figure-eight
 D = Observable(0.0)       # asymmetry factor
-x0 = 0.0      # center x-coordinate
+x0 = Observable(0.0)      # center x-coordinate
 y0 = Observable(25.0)     # center y-coordinate
 theta = 0*π/6   # rotation angle in radians
 num_points = 200
 
-function figure_eight_y(A, B, C, D, y0)
+function figure_eight_y(A, B, C, D, x0, y0)
     x, y = figure_eight_path(A, B, C, D, x0, y0, theta, num_points)
     return y
 end
 
-function figure_eight_x(A, B, C, D, y0)
+function figure_eight_x(A, B, C, D, x0, y0)
     x, y = figure_eight_path(A, B, C, D, x0, y0, theta, num_points)
     return x
 end
 
-y = @lift(figure_eight_y($A, $B, $C, $D, $y0))
-x = @lift(figure_eight_x($A, $B, $C, $D, $y0))
+y = @lift(figure_eight_y($A, $B, $C, $D, $x0, $y0))
+x = @lift(figure_eight_x($A, $B, $C, $D, $x0, $y0))
 
 # Create the figure and axis
 fig = Figure()
@@ -53,6 +53,7 @@ sg = SliderGrid(
     (label = "B (height)", range = 5:0.01:20.0, startvalue = 10.0),
     (label = "C (right_size)", range = -2.0:0.01:2.0, startvalue = 0.0),
     (label = "D (asymmetry)", range = -3:0.01:3.0, startvalue = 0.0),
+    (label = "x0", range = -10:0.01:10.0, startvalue = 0.0),
     (label = "y0", range = 20:0.01:30.0, startvalue = 25.0)
 )
 
@@ -74,6 +75,10 @@ on(sg.sliders[4].value) do val
 end
 
 on(sg.sliders[5].value) do val
+    x0[] = val
+end
+
+on(sg.sliders[6].value) do val
     y0[] = val
 end
 
