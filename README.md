@@ -8,23 +8,23 @@ First, install Julia 1.10 or newer as explained [here](https://ufechner7.github.
 
 Checkout this repo:
 
-```
+```bash
 git clone https://github.com/OpenSourceAWE/OptimalFlightPaths.jl.git
 ```
 Start Julia with
-```
+```bash
 cd OptimalFlightPaths.jl
 julia --project
 ```
 
 Install the dependencies with:
-```
+```julia
 using Pkg
 Pkg.instantiate()
 ```
 
 Run the example with:
-```
+```julia
 include("examples/create_flightpath.jl")
 ```
 You should see a tilted figure of eight.
