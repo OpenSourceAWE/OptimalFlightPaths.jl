@@ -14,12 +14,12 @@ function figure_eight_path(A, B, C, D, x0, y0, theta, num_points)
     return x_final, y_final
 end
 
-A = 10.0      # width of the figure-eight
-B = 5.0       # height of the figure-eight
+A = 20.0      # width of the figure-eight
+B = 10.0       # height of the figure-eight
 C = Observable(0.0)       # size of right part of the figure-eight
 D = Observable(0.0)      # asymmetry factor
 x0 = 0.0      # center x-coordinate
-y0 = 0.0      # center y-coordinate
+y0 = 25.0      # center y-coordinate
 theta = 0*π/6   # rotation angle in radians
 num_points = 200
 
@@ -38,7 +38,8 @@ x = @lift(figure_eight_x($C, $D))
 
 # Create the figure and axis
 fig = Figure()
-ax = Axis(fig[1, 1], xlabel = "x", ylabel = "y")
+ax = Axis(fig[1, 1], xlabel = "azimuth [°]", ylabel = "elevation [°]",
+          title = "Figure of Eight Path")
 
 # Plot the sine wave
 lineplot = lines!(ax, x, y)
@@ -47,7 +48,7 @@ lineplot = lines!(ax, x, y)
 sg = SliderGrid(
     fig[2, 1],
     (label = "C", range = -2.0:0.01:2.0, startvalue = 0.0),
-    (label = "D", range = -2:0.01:2.0, startvalue = 0.0)
+    (label = "D", range = -3:0.01:3.0, startvalue = 0.0)
 )
 
 # Connect sliders to observables
